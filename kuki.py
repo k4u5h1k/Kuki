@@ -20,15 +20,17 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
     print("Kuki has connected to Discord!")
 
+
 @client.event
 async def on_message(message):
-    if str(message.channel)=='chat-with-kuki' and not (message.author == client.user):
-        response = tell(message.content)
-        response = response.replace('Steve Worswick','Kaushik Sivashankar')
+    if str(message.channel) == 'chat-with-kuki' and not message.author == client.user:
+        response = tell_kuki(message.content)
+        response = response.replace('Steve Worswick', 'Kaushik Sivashankar')
         await message.channel.send(response)
 
 
@@ -40,19 +42,20 @@ def new_client():
         wait.until(EC.element_to_be_clickable((By.ID, "pb-widget-input-field"))).send_keys("Hey"+Keys.ENTER)
 
         browser_log = str(driver.get_log('performance'))
-        client_name = re.search(r'kukilp-.{10}',browser_log)[0]
+        client_name = re.search(r'kukilp-.{10}', browser_log)[0]
         driver.quit()
 
     except:
         driver.quit()
         print("Could not forge client, making a random one instead")
-        client_name = 'kukilp-'+''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))
+        client_name = 'kukilp-'+''.join(random.choice(string.ascii_lowercase+string.digits) for _ in range(10))
 
     return client_name
 
+
 def postit(botkey, query, client_name, sessionid):
     data = f'input={query}&botkey={botkey}&client_name={client_name}&sessionid={sessionid}&channel=6'
-    return session.post('https://miapi.pandorabots.com/talk', data = data).text
+    return session.post('https://miapi.pandorabots.com/talk', data=data).text
 
 
 def tell_kuki(query):
@@ -79,7 +82,7 @@ def tell_kuki(query):
 
     except Exception as e:
         print("Error", e)
-        fail_count+=1
+        fail_count += 1
         return tell_kuki(query)
 
     response_json = json.loads(response_raw)
@@ -87,7 +90,7 @@ def tell_kuki(query):
     response = list(re.sub(r'<.*?>', ' ', i) for i in response_json['responses'][0].split("\u200e"))
     response = '\n'.join(response)
 
-    if len(response)==0:
+    if len(response) == 0:
         print("zero response")
         print(response_json)
         client_name = new_client()
@@ -104,7 +107,7 @@ if __name__ == "__main__":
 
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options = chrome_options, desired_capabilities=caps)
+    driver = webdriver.Chrome(options=chrome_options, desired_capabilities=caps)
     wait = WebDriverWait(driver, 20)
 
     url = 'https://www.pandorabots.com/mitsuku/'
@@ -115,6 +118,6 @@ if __name__ == "__main__":
 
     fail_count = 0
 
-    load_dotenv(dotenv_path = "token.env")
+    load_dotenv(dotenv_path=os.path.join(sys.path[0], "token.env"))
     token = os.getenv("DISCORD_TOKEN")
     client.run(token)
