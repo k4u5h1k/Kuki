@@ -26,7 +26,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if str(message.channel)=='chat-with-kuki' and not (message.author == client.user  or str(message.author)=='k4u5h1k#8653'):
+    if str(message.channel)=='chat-with-kuki' and not (message.author == client.user):
         response = tell(message.content)
         response = response.replace('Steve Worswick','Kaushik Sivashankar')
         await message.channel.send(response)
@@ -60,7 +60,7 @@ def tell_kuki(query):
 
     if fail_count > 2:
         fail_count = 0
-        return "An Error occured, because Cosec cannot code, restarting..."
+        return "An Error occured, because Kaushik sucks, restarting..."
 
     session.headers.update({
         'User-Agent': ' '.join(('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2)',
