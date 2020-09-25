@@ -27,7 +27,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if str(message.channel)=='chat-with-kuki' and not (message.author == client.user  or str(message.author)=='k4u5h1k#8653'):
-        response = tell_kuki(message.content)
+        response = tell(message.content)
         response = response.replace('Steve Worswick','Kaushik Sivashankar')
         await message.channel.send(response)
 
