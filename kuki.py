@@ -23,7 +23,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 client = discord.Client()
 kaushik = re.compile('Kaushik( Sivashankar)?',re.IGNORECASE)
-stevey = re.compile('Steve( Worswick)?',re.IGNORECASE)
+pandora = re.compile('Pandorabots',re.IGNORECASE)
 translator = Translator()
 
 
@@ -35,6 +35,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if str(message.channel) == 'chat-with-kuki' and message.author != client.user:
+        print(message.content)
         if message.content[0] != '/':
             if '>' in message.content:
                 await message.channel.send('I do not support quoted messages and users for now, sorry!')
@@ -42,12 +43,14 @@ async def on_message(message):
             else:
                 translateResponse = False
 
+                print(message.content)
+
                 if translator.detect(message.content).lang == 'hi':
                     message.content = translator.translate(message.content).text
                     translateResponse = True
 
-                new_message = kaushik.sub('Steve Worswick', message.content)
-                response = stevey.sub('Kaushik',tell_kuki(new_message))
+                new_message = kaushik.sub('Pandorabots', message.content)
+                response = pandora.sub('Kaushik',tell_kuki(new_message))
 
                 if translateResponse:
                     response = translator.translate(response,src='en',dest='hi').text
