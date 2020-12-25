@@ -2,3 +2,5 @@ requests
 selenium
 discord
 python-dotenv
+googletrans
+git+git://github.com/libindic/indic-trans.git
