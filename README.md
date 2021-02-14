@@ -1,6 +1,5 @@
 # Kuki
-Discord extension to only the best chatbot in the world.
-Port of [pandorabots.com/kuki](https://www.pandorabots.com/kuki/)
+Discord port of only the best chatbot in the world, [pandorabots.com/kuki](https://www.pandorabots.com/kuki/)
 
 # Usage
 1. Get chromedriver for your os (`sudo apt-get install chromium-chromedriver` if using linux)
